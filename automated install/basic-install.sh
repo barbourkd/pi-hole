@@ -2518,6 +2518,9 @@ main() {
 
 
     if [[ "${useUpdateVars}" == false ]]; then
+        # Check if SELinux is Enforcing
+        checkSelinux
+
         # Display welcome dialogs
         welcomeDialogs
         # Create directory for Pi-hole storage
@@ -2539,8 +2542,6 @@ main() {
         # Let the user decide the FTL privacy level
         setPrivacyLevel
     else
-        # Check if SELinux is Enforcing
-        checkSelinux
 
         # Setup adlist file if not exists
         installDefaultBlocklists
