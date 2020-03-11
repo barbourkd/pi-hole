@@ -332,7 +332,7 @@ elif is_command rpm ; then
             rpm -q ${REMI_PKG} &> /dev/null || rc=$?
         if [[ $rc -ne 0 ]]; then
             # The PHP version available via default repositories is older than version 7
-            if ! whiptail --defaultno --title "PHP 7 Update (recommended)" --yesno "PHP 7.x is recommended for both security and language features.\\nWould you like to install PHP7 via Remi's RPM repository?\\n\\nSee: https://rpms.remirepo.net for more information" ${r} ${c}; then
+            if 0; then
                 # User decided to NOT update PHP from REMI, attempt to install the default available PHP version
                 printf "  %b User opt-out of PHP 7 upgrade on CentOS. Deprecated PHP may be in use.\\n" "${INFO}"
                 : # continue with unsupported php version
@@ -2516,8 +2516,6 @@ main() {
     # Install packages used by this installation script
     install_dependent_packages "${INSTALLER_DEPS[@]}"
 
-    # Check if SELinux is Enforcing
-    checkSelinux
 
     if [[ "${useUpdateVars}" == false ]]; then
         # Display welcome dialogs
@@ -2541,6 +2539,9 @@ main() {
         # Let the user decide the FTL privacy level
         setPrivacyLevel
     else
+        # Check if SELinux is Enforcing
+        checkSelinux
+
         # Setup adlist file if not exists
         installDefaultBlocklists
 
